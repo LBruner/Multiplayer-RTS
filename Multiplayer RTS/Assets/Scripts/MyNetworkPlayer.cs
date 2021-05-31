@@ -31,10 +31,14 @@ public class MyNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSetDisplayName(string newName)
+    private void CmdSetDisplayName(string newDisplayName)
     {
-        RpcSetNewName(newName);
-        SetDisplayName(newName);
+        RpcSetNewName(newDisplayName);
+
+        if (newDisplayName.Length < 2 || newDisplayName.Length > 10)
+            return;
+
+        SetDisplayName(newDisplayName);
     }
 
     #endregion
@@ -58,7 +62,7 @@ public class MyNetworkPlayer : NetworkBehaviour
     [ContextMenu("Set My Name")]
     private void SetMyName()
     {
-        CmdSetDisplayName("New Name!");
+        CmdSetDisplayName("HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello");
     }
     #endregion
 }
