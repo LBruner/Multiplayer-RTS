@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6068700878196408999}
   - component: {fileID: 772150162585012388}
+  - component: {fileID: 7767218704731733337}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -49,6 +50,22 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &7767218704731733337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2952044919150725054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39550cf09bb0374a985fa4c85ef3c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  displayName: 
+  displayColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7757142086671611616
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d9bd8ec556133a44db52a63c57de9ccd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
