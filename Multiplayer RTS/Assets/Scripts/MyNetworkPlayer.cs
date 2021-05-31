@@ -1,15 +1,19 @@
 ﻿using Mirror;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MyNetworkPlayer : NetworkBehaviour
 {
-    [SyncVar]
+    [SerializeField] TMP_Text displayNameText;
+    [SerializeField] Renderer displayRendererColor;
+
+    [SyncVar (hook = nameof(HandleDisplayTextUpdated))]
     [SerializeField]
     string displayName;
 
-    [SyncVar]
+    [SyncVar(hook = nameof(HandleDisplayColorUpdated))]
     [SerializeField]
     Color displayColor;
 
@@ -24,4 +28,13 @@ public class MyNetworkPlayer : NetworkBehaviour
     {
         displayColor = newDisplayColor;
     }
+    public void HandleDisplayTextUpdated(string oldName, string newName)
+    {
+        displayNameText.text = newName;
+    }
+
+    private void HandleDisplayColorUpdated(Color oldColor,Color newColor)
+    {
+        displayRendererColor.material.SetColor("_BaseColor", newColor);
+    }  
 }
