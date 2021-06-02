@@ -23,14 +23,10 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     #region Client
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("h1");
-
         if (eventData.button != PointerEventData.InputButton.Left) { return; }
-        Debug.Log("h2");
 
         if (!hasAuthority) { return; }
 
-        Debug.Log("h3");
         CmdSpawnUnit();
     }
 

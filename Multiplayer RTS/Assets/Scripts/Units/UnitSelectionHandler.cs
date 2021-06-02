@@ -84,7 +84,6 @@ public class UnitSelectionHandler : MonoBehaviour
 
             if (!unit.hasAuthority) { return; }
 
-            Debug.Log(SelectedUnits.Count);
             SelectedUnits.Add(unit);
 
             foreach (Unit selectedUnit in SelectedUnits)
