@@ -211,6 +211,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: -2345741048361053857}
   targeter: {fileID: 7993992857594929288}
+  chaseRange: 8
 --- !u!114 &1315489729535089816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  target: {fileID: 0}
 --- !u!1 &4147672623874386646
 GameObject:
   m_ObjectHideFlags: 0
