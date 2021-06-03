@@ -16,12 +16,10 @@ public class UnitMovement : NetworkBehaviour
         {
             if((target.transform.position - transform.position).sqrMagnitude > chaseRange * chaseRange)
             {
-                Debug.Log("5");
                 agent.SetDestination(target.transform.position);
             }
             else if(agent.hasPath)
             {
-                Debug.Log("foajs");
                 agent.ResetPath();
             }
 
