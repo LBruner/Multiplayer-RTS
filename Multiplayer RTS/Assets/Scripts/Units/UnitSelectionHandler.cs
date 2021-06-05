@@ -1,6 +1,4 @@
 ﻿using Mirror;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +19,13 @@ public class UnitSelectionHandler : MonoBehaviour
     private void Start()
     {
         maincamera = Camera.main;
+
+        Unit.AutorityOnUnitDespawned += AuthorityHandleDie;
+    }
+
+    private void OnDestroy()
+    {
+        Unit.AutorityOnUnitDespawned -= AuthorityHandleDie;
     }
 
     private void Update()
@@ -111,5 +116,10 @@ public class UnitSelectionHandler : MonoBehaviour
                 unit.Select();
             }
         }
+    }
+
+    private void AuthorityHandleDie(Unit unit)
+    {
+        SelectedUnits.Remove(unit);
     }
 }

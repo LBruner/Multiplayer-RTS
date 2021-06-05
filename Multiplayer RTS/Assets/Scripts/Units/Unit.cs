@@ -1,7 +1,5 @@
 ﻿using Mirror;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +9,7 @@ public class Unit : NetworkBehaviour
     [SerializeField] private UnityEvent onDeselected;
     [SerializeField] private UnitMovement unitMovement;
     [SerializeField] private Targeter targeter = null;
+    [SerializeField] private Health health = null;
 
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
@@ -33,25 +32,31 @@ public class Unit : NetworkBehaviour
     public override void OnStartServer()
     {
         ServerOnUnitSpawned?.Invoke(this);
+        health.ServerOnDie += HandleUnitDie;
     }
     public override void OnStopServer()
     {
+        health.ServerOnDie -= HandleUnitDie;
         ServerOnUnitDespawned?.Invoke(this);
+    }
+
+    [Server]
+    private void HandleUnitDie()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 
     #endregion
     #region Client
 
-    public override void OnStartClient()
+    public override void OnStartAuthority()
     {
-        if (!isClientOnly || hasAuthority) { return; }
-
         AutorityOnUnitSpawned?.Invoke(this);
     }
 
     public override void OnStopClient()
     {
-        if (!isClientOnly || hasAuthority) { return; }
+        if (hasAuthority) { return; }
 
         AutorityOnUnitDespawned?.Invoke(this);
     }
@@ -59,7 +64,7 @@ public class Unit : NetworkBehaviour
     [Client]
     public void Select()
     {
-        if(!hasAuthority) { return; }
+        if (!hasAuthority) { return; }
         onSelected?.Invoke();
     }
 
