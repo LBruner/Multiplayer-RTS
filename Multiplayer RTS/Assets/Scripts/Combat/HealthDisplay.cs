@@ -19,20 +19,13 @@ public class HealthDisplay : MonoBehaviour
         health.ClientOnHealthUpdated -= HandleHealthUpdated;
     }
 
-    private void OnMouseOver()
-    {
-        Debug.Log("faopjfoasjf");
-    }
-
     private void OnMouseEnter()
     {
-        Debug.Log("Foasj");
         healthBarParent.gameObject.SetActive(true);
     }
 
     private void OnMouseExit()
     {
-        Debug.Log("5");
         healthBarParent.gameObject.SetActive(false);
     }
 

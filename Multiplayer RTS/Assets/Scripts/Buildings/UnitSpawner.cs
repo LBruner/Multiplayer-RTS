@@ -1,7 +1,4 @@
 ﻿using Mirror;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -25,7 +22,7 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
 
     private void HandleServerDie()
     {
-        NetworkServer.Destroy(gameObject);
+        // NetworkServer.Destroy(gameObject);
     }
 
     [Command]
