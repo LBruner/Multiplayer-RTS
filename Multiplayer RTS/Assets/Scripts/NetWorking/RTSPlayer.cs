@@ -7,10 +7,20 @@ using UnityEngine;
 public class RTSPlayer : NetworkBehaviour
 {
     [SerializeField] private Bulding[] buldings = new Bulding[0];
-   
+
+    [SyncVar(hook = nameof(ClientHandleResourceUpdated))]
+    private int resources = 100;
+
     private List<Unit> myUnits = new List<Unit>();
     private List<Bulding> myBuildings = new List<Bulding>();
     
+    public event Action<int> ClientOnResourcesUpdated; 
+
+    public int GetResources()
+    {
+        return resources;
+    }
+
     public List<Unit> GetMyUnits()
     {
         return myUnits; 
@@ -19,6 +29,12 @@ public class RTSPlayer : NetworkBehaviour
     public List<Bulding> GetMyBuildings()
     {
         return myBuildings;
+    }
+
+    [Server]
+    public void SetResources(int newResources)
+    {
+        resources = newResources;
     }
 
     #region Server
@@ -36,6 +52,11 @@ public class RTSPlayer : NetworkBehaviour
         Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
         Bulding.ServerOnBuldingSpawned -= ServerHandleBuldingSpawned;
         Bulding.ServerOnBuldingDespawned -= ServerHandleBuldingDespawned;
+    }
+
+    private void ClientHandleResourceUpdated(int oldResources, int newResources)
+    {
+        ClientOnResourcesUpdated?.Invoke(newResources);
     }
 
     [Command]
