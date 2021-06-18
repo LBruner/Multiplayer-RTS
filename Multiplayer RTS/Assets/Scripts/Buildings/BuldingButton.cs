@@ -57,7 +57,7 @@ public class BuldingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
         {
-
+            player.CmdTryPlaceBulding(bulding.GetID(), hit.point);
         }
 
         Destroy(buldingPreviewInstance);

@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class RTSPlayer : NetworkBehaviour
 {
+    [SerializeField] private Bulding[] buldings = new Bulding[0];
+   
     private List<Unit> myUnits = new List<Unit>();
-    [SerializeField] private List<Bulding> myBuildings = new List<Bulding>();
+    private List<Bulding> myBuildings = new List<Bulding>();
     
     public List<Unit> GetMyUnits()
     {
@@ -34,6 +36,28 @@ public class RTSPlayer : NetworkBehaviour
         Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
         Bulding.ServerOnBuldingSpawned -= ServerHandleBuldingSpawned;
         Bulding.ServerOnBuldingDespawned -= ServerHandleBuldingDespawned;
+    }
+
+    [Command]
+    public void CmdTryPlaceBulding(int buldingID, Vector3 point)
+    {
+        Bulding buldingToPlace = null;
+       
+        foreach (Bulding bulding in buldings)
+        {
+            if(bulding.GetID() == buldingID)
+            {
+                buldingToPlace = bulding;
+                break;
+            }
+        }
+
+        if (buldingToPlace == null) { return; }
+
+        GameObject buldingInstance = 
+        Instantiate(buldingToPlace.gameObject, point, Quaternion.identity);
+
+        NetworkServer.Spawn(buldingInstance, connectionToClient);
     }
 
     private void ServerHandleUnitSpawned(Unit unit)
