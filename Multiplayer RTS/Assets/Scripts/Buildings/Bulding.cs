@@ -7,6 +7,7 @@ using UnityEngine;
 [SelectionBase]
 public class Bulding : NetworkBehaviour
 {
+    [SerializeField] private GameObject buldingPreview = null;
     [SerializeField] private Sprite icon = null;
     [SerializeField] private int id = -1;
     [SerializeField] private int price = 100;
@@ -17,7 +18,10 @@ public class Bulding : NetworkBehaviour
     public static event Action<Bulding> AuthorityOnBuldingSpawned;
     public static event Action<Bulding> AuthorityOnBuldingDespawned;
 
-
+    public GameObject GetBuldingPreview()
+    {
+        return buldingPreview;
+    }
     public Sprite GetICon()
     {
         return icon;
