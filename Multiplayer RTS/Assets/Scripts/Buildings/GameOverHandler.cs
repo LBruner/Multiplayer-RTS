@@ -4,10 +4,13 @@ using Mirror;
 using UnityEngine;
 
 public class GameOverHandler : NetworkBehaviour
-{   
-    private List<UnitBase> bases = new List<UnitBase>();
-    
+{
+    public static event Action ServerOnGameOver;
+
     public static event Action<string> ClientOnGameOver;
+    
+    private List<UnitBase> bases = new List<UnitBase>();
+
     #region Server
 
     public override void OnStartServer()
@@ -40,6 +43,8 @@ public class GameOverHandler : NetworkBehaviour
         int winnerID = bases[0].connectionToClient.connectionId;
 
         RpcGameOver($"Player:  {winnerID} ");
+
+        ServerOnGameOver?.Invoke();
     }
 
     #endregion

@@ -7,10 +7,20 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] NavMeshAgent agent = null;
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private float chaseRange = 10f;
+
+    public override void OnStartServer()
+    {
+        GameOverHandler.ServerOnGameOver += ServerHandleGameOver;
+    }
+
+    public override void OnStopServer()
+    {
+        GameOverHandler.ServerOnGameOver -= ServerHandleGameOver;
+    }
+
     [ServerCallback]
     private void Update()
     {
-        
         Targetable target = targeter.GetTarget();
         if(target != null)
         {
@@ -45,7 +55,10 @@ public class UnitMovement : NetworkBehaviour
     }
     #endregion
 
-    #region Client
-    
-    #endregion
+    [Server]
+    private void ServerHandleGameOver()
+    {
+        agent.ResetPath();
+    }
+
 }
