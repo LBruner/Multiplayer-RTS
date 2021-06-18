@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+[SelectionBase]
 public class Unit : NetworkBehaviour
 {
     [SerializeField] private UnityEvent onSelected;
