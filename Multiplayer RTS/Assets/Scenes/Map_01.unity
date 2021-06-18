@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 562614414}
   - component: {fileID: 562614413}
   - component: {fileID: 562614412}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ MonoBehaviour:
   unitSelectionArea: {fileID: 1436999134}
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
 --- !u!4 &1231763433
 Transform:
   m_ObjectHideFlags: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   unitSelectionHandler: {fileID: 1231763432}
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 5121
 --- !u!1001 &1401015902
 PrefabInstance:
   m_ObjectHideFlags: 0

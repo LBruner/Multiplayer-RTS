@@ -29,8 +29,6 @@ public class GameOverHandler : NetworkBehaviour
     private void ServerHandleBaseSpawn(UnitBase unitBase)
     {
         bases.Add(unitBase);
-        Debug.Log(unitBase);
-        Debug.Log(bases.Count);
     }
     
     [Server]
