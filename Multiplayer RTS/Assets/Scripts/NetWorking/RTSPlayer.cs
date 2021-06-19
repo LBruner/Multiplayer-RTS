@@ -9,13 +9,21 @@ public class RTSPlayer : NetworkBehaviour
     [SerializeField] private LayerMask buldingBlockLayer = new LayerMask();
     [SerializeField] private Bulding[] buldings = new Bulding[0];
     [SerializeField] private float buldingRangeLimit = 5f;
-    [SyncVar(hook = nameof(ClientHandleResourceUpdated))]
-    private int resources = 100;
 
+    [SyncVar(hook = nameof(ClientHandleResourceUpdated))]
+    
+    private int resources = 100;
+    
+    public event Action<int> ClientOnResourcesUpdated;
+
+    private Color teamColor = new Color();
     private List<Unit> myUnits = new List<Unit>();
     private List<Bulding> myBuildings = new List<Bulding>();
     
-    public event Action<int> ClientOnResourcesUpdated; 
+    public Color GetTeamColor()
+    {
+        return teamColor;
+    }
 
     public int GetResources()
     {
@@ -31,13 +39,7 @@ public class RTSPlayer : NetworkBehaviour
     {
         return myBuildings;
     }
-
-    [Server]
-    public void SetResources(int newResources)
-    {
-        resources = newResources;
-    }
-
+   
     public bool CanPlaceBulding(BoxCollider buldingCollider, Vector3 point)
     {
         if (Physics.CheckBox(point + buldingCollider.center, buldingCollider.size / 2, Quaternion.identity, buldingBlockLayer))
@@ -71,6 +73,18 @@ public class RTSPlayer : NetworkBehaviour
         Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
         Bulding.ServerOnBuldingSpawned -= ServerHandleBuldingSpawned;
         Bulding.ServerOnBuldingDespawned -= ServerHandleBuldingDespawned;
+    }
+
+    [Server]
+    public void SetTeamColor(Color newTeamColor)
+    {
+        teamColor = newTeamColor;
+    }
+
+    [Server]
+    public void SetResources(int newResources)
+    {
+        resources = newResources;
     }
 
     private void ClientHandleResourceUpdated(int oldResources, int newResources)
