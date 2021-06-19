@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class RTSPlayer : NetworkBehaviour
 {
+    [SerializeField] private LayerMask buldingBlockLayer = new LayerMask();
     [SerializeField] private Bulding[] buldings = new Bulding[0];
-
+    [SerializeField] private float buldingRangeLimit = 5f;
     [SyncVar(hook = nameof(ClientHandleResourceUpdated))]
     private int resources = 100;
 
@@ -37,6 +38,24 @@ public class RTSPlayer : NetworkBehaviour
         resources = newResources;
     }
 
+    public bool CanPlaceBulding(BoxCollider buldingCollider, Vector3 point)
+    {
+        if (Physics.CheckBox(point + buldingCollider.center, buldingCollider.size / 2, Quaternion.identity, buldingBlockLayer))
+        {
+            return false;
+        }
+
+        foreach (Bulding bulding in myBuildings)
+        {
+            if ((point - bulding.transform.position).sqrMagnitude <= buldingRangeLimit * buldingRangeLimit)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #region Server
     public override void OnStartServer()
     {
@@ -63,7 +82,7 @@ public class RTSPlayer : NetworkBehaviour
     public void CmdTryPlaceBulding(int buldingID, Vector3 point)
     {
         Bulding buldingToPlace = null;
-       
+
         foreach (Bulding bulding in buldings)
         {
             if(bulding.GetID() == buldingID)
@@ -75,10 +94,20 @@ public class RTSPlayer : NetworkBehaviour
 
         if (buldingToPlace == null) { return; }
 
+        if(resources < buldingToPlace.GetPrice()) { return;}
+
+        BoxCollider buldingCollider = buldingToPlace.GetComponent<BoxCollider>();
+        
+        
+
+        if (!CanPlaceBulding(buldingCollider, point)) { return; }
+
         GameObject buldingInstance = 
         Instantiate(buldingToPlace.gameObject, point, Quaternion.identity);
 
         NetworkServer.Spawn(buldingInstance, connectionToClient);
+
+        SetResources(resources - buldingToPlace.GetPrice());
     }
 
     private void ServerHandleUnitSpawned(Unit unit)

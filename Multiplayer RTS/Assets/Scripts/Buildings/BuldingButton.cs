@@ -15,6 +15,7 @@ public class BuldingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private LayerMask floorMask = new LayerMask();
 
     private Camera mainCamera;
+    private BoxCollider buldingCollider;
     private RTSPlayer player;
     private GameObject buldingPreviewInstance;
     private Renderer buldingRenderInstance;
@@ -25,6 +26,8 @@ public class BuldingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         iconImage.sprite = bulding.GetICon();
         priceText.text = bulding.GetPrice().ToString();
+
+        buldingCollider = bulding.GetComponent<BoxCollider>();
     }
 
     private void Update()
@@ -42,6 +45,8 @@ public class BuldingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
+
+        //if (player.GetResources() < bulding.GetPrice()) { return; } Mudança minha
 
         buldingPreviewInstance = Instantiate(bulding.GetBuldingPreview());
         buldingRenderInstance = buldingPreviewInstance.GetComponentInChildren<Renderer>();
@@ -76,7 +81,20 @@ public class BuldingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             buldingPreviewInstance.SetActive(true);
         }
-    
+
+        //Color color = player.CanPlaceBulding(buldingCollider, hit.point) ? Color.green : Color.red; Original
+
+        Color color;
+
+        if(!player.CanPlaceBulding(buldingCollider, hit.point))  //Adicionado por mim.
+            color = Color.red;
+        else if(player.GetResources() < bulding.GetPrice())
+            color = Color.magenta;
+        else
+            color = Color.green;;
+
+        buldingRenderInstance.material.SetColor("_BaseColor", color);
+
     }
 
 }

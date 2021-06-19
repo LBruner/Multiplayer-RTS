@@ -63,6 +63,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  buldingBlockLayer:
+    serializedVersion: 2
+    m_Bits: 1281
   buldings:
   - {fileID: 6973987760483882359, guid: 2c049c934b2db1846b253549bb7d904c, type: 3}
   - {fileID: 6973987760483882359, guid: bd7611e225664a14893497e4ec9d2049, type: 3}
+  buldingRangeLimit: 5
