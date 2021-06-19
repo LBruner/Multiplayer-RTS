@@ -34,10 +34,10 @@ public class CameraController : NetworkBehaviour
     {
         if (!hasAuthority || !Application.isFocused) { return; }
 
-        updateCameraPosition();
+        UpdateCameraPosition();
     }
 
-    private void updateCameraPosition()
+    private void UpdateCameraPosition()
     {
         Vector3 pos = playerCameraTransform.position;
 
