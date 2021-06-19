@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [SelectionBase]
 public class Unit : NetworkBehaviour
 {
+    [SerializeField] private int resourceCost = 50;
     [SerializeField] private UnityEvent onSelected;
     [SerializeField] private UnityEvent onDeselected;
     [SerializeField] private UnitMovement unitMovement;
@@ -18,6 +19,11 @@ public class Unit : NetworkBehaviour
     public static event Action<Unit> AutorityOnUnitSpawned;
     public static event Action<Unit> AutorityOnUnitDespawned;
 
+    public int GetResourceCost()
+    {
+        return resourceCost;
+    }
+    
     public UnitMovement GetUnitMovement()
     {
         return unitMovement;
