@@ -174,6 +174,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5840391175945177303}
     m_Modifications:
+    - target: {fileID: 1409251922367407568, guid: af1f138fd5ea6c74d8ad235c172d5aea,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 15624d3f096365b4eb3250b14aaa510a,
+        type: 3}
+    - target: {fileID: 1409251922367407568, guid: af1f138fd5ea6c74d8ad235c172d5aea,
+        type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2223521240000113713, guid: af1f138fd5ea6c74d8ad235c172d5aea,
         type: 3}
       propertyPath: m_Name
@@ -282,6 +293,16 @@ PrefabInstance:
     - target: {fileID: 2308852769273620224, guid: af1f138fd5ea6c74d8ad235c172d5aea,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296898869185933907, guid: af1f138fd5ea6c74d8ad235c172d5aea,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296898869185933907, guid: af1f138fd5ea6c74d8ad235c172d5aea,
+        type: 3}
+      propertyPath: m_UseSpriteMesh
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
