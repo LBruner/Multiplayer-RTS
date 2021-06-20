@@ -70,8 +70,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1281
   buldings:
-  - {fileID: 6973987760483882359, guid: 2c049c934b2db1846b253549bb7d904c, type: 3}
+  - {fileID: 2312428975288960094, guid: 56e3e2c21c70c8d48a9fe42a74866e5e, type: 3}
   - {fileID: 6973987760483882359, guid: bd7611e225664a14893497e4ec9d2049, type: 3}
+  - {fileID: 6744368216158144263, guid: 6cfec999f9b46474e89c65bd0f543f15, type: 3}
   buldingRangeLimit: 5
 --- !u!114 &4190173659020599613
 MonoBehaviour:
