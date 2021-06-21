@@ -1,4 +1,4 @@
-﻿using Mirror;
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -117,8 +117,7 @@ public class RTSPlayer : NetworkBehaviour
         if(resources < buldingToPlace.GetPrice()) { return;}
 
         BoxCollider buldingCollider = buldingToPlace.GetComponent<BoxCollider>();
-        
-        
+            
 
         if (!CanPlaceBulding(buldingCollider, point)) { return; }
 
