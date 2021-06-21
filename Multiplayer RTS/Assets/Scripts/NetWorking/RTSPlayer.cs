@@ -14,13 +14,23 @@ public class RTSPlayer : NetworkBehaviour
     [SyncVar(hook = nameof(ClientHandleResourceUpdated))]
     
     private int resources = 100;
-    
+
+    [SyncVar(hook =nameof(AuthorityHandlePartyOwnerStateUpdated))]
+    private bool isPartyOwner = false;
+
     public event Action<int> ClientOnResourcesUpdated;
+
+    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
 
     private Color teamColor = new Color();
     private List<Unit> myUnits = new List<Unit>();
     private List<Bulding> myBuildings = new List<Bulding>();
     
+    public bool GetIsPartyOwner()
+    {
+        return isPartyOwner;
+    }
+
     public Transform GetCameraTransform()
     {
         return cameraTransform;
@@ -82,6 +92,12 @@ public class RTSPlayer : NetworkBehaviour
     }
 
     [Server]
+    public void SetPartyOwner(bool state)
+    {
+        isPartyOwner = state;
+    }
+
+    [Server]
     public void SetTeamColor(Color newTeamColor)
     {
         teamColor = newTeamColor;
@@ -96,6 +112,15 @@ public class RTSPlayer : NetworkBehaviour
     private void ClientHandleResourceUpdated(int oldResources, int newResources)
     {
         ClientOnResourcesUpdated?.Invoke(newResources);
+    }
+
+    [Command]
+    public void CmdStartGame()
+    {
+        if (!isPartyOwner) { return; }
+
+       ((RTSNetworkManager)NetworkManager.singleton).StartGame();
+
     }
 
     [Command]
@@ -167,15 +192,32 @@ public class RTSPlayer : NetworkBehaviour
         Bulding.AuthorityOnBuldingDespawned += AuthorityHandleBuldingDespawned;
     }
 
+    public override void OnStartClient()
+    {
+        if (NetworkServer.active) { return; }
+
+        ((RTSNetworkManager)NetworkManager.singleton).Players.Add(this);
+    }
+
     public override void OnStopClient()
     {
-        if (!isClientOnly || !hasAuthority) { return; }
+        if (!isClientOnly) { return; }
+
+        ((RTSNetworkManager)NetworkManager.singleton).Players.Remove(this);
+
+        if (!hasAuthority) { return; }
 
         Unit.AutorityOnUnitDespawned -= AuthorityHandleUnitSpawned;
         Unit.AutorityOnUnitDespawned -= AuthorityHandleUnitDespawned;
         Bulding.AuthorityOnBuldingSpawned -= AuthorityHandleBuldingSpawned;
         Bulding.AuthorityOnBuldingDespawned -= AuthorityHandleBuldingDespawned;
+    }
 
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldstate, bool newState)
+    {
+        if (!hasAuthority) { return; }
+
+        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
     private void AuthorityHandleUnitSpawned(Unit unit)
     {
